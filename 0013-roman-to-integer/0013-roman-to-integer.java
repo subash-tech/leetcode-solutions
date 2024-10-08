@@ -1,23 +1,25 @@
 class Solution {
     public int romanToInt(String s) {
-        int ans=0;
-        int[] roman = new int[100];
-
-        roman['I']=1;
-        roman['V']=5;
-        roman['X']=10;
-        roman['L']=50;
-        roman['C']=100;
-        roman['D']=500;
-        roman['M']=1000;
-        for(int i=0;i+1<s.length(); ++i)
-            if(roman[s.charAt(i)]<roman[s.charAt(i+1)])
-                 ans-=roman[s.charAt(i)];
-            else
-                ans+=roman[s.charAt(i)];
-
-        return ans + roman[s.charAt(s.length() -1)];
-
+        HashMap<Character,Integer> hash=new HashMap<>();
+        hash.put('I',1);
+        hash.put('V',5);
+        hash.put('X',10);
+        hash.put('L',50);
+        hash.put('C',100);
+        hash.put('D',500);
+        hash.put('M',1000);
         
+        int n=0;
+        
+        for(int i=0;i<s.length();i++){
+            char c=s.charAt(i);
+            if(i+1<s.length() && hash.get(s.charAt(i+1))>hash.get(c)){
+                n+=hash.get(s.charAt(i+1))-hash.get(c);
+                i+=1;
+            }
+            else n+=hash.get(c);
+        }
+        
+        return n;        
     }
 }
